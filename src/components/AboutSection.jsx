@@ -1,8 +1,36 @@
 import { Briefcase, Code, User } from "lucide-react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollSmoother } from "gsap/ScrollSmoother";
 
 export const AboutSection = () => {
+  gsap.registerPlugin(ScrollTrigger,ScrollSmoother);
+    useGSAP(() => {
+       gsap.utils.toArray(".abhay1").forEach((text) => {
+      gsap.from(text, {
+          // Set the opacity of the text to 0
+          opacity: 0,
+          // Move the text from the left to its final position
+          // (xPercent: 0 means the text is at its final position)
+          xPercent: 0,
+          // Animate over 1 second
+          duration: 3,
+          // Use a power2 ease-in-out curve
+          ease: "power2.inOut",
+          // Trigger the animation when the text is 60% down the screen
+          scrollTrigger: {
+            // The text is the trigger element
+            trigger: text,
+            // Trigger the animation when the text is 60% down the screen
+            start: "top 60%",
+          },
+        });
+        }, "<");
+      }, []); // position parameter
+   
   return (
-    <section id="about" className="py-24 px-4 relative scroll-smooth">
+    <section id="about" className=" abhay1 py-24 px-4 relative scroll-smooth">
       {" "}
       <div className="container mx-auto max-w-5xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">

@@ -1,5 +1,12 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+//import {ViewTransition} from 'react';
+import {motion} from "framer-motion";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollSmoother } from "gsap/ScrollSmoother";
+
 
 const skills = [
   // Frontend
@@ -27,13 +34,38 @@ const skills = [
 const categories = ["all", "frontend", "backend", "tools"];
 
 export const SkillsSection = () => {
+  gsap.registerPlugin(ScrollTrigger,ScrollSmoother);
+    useGSAP(() => {
+       gsap.utils.toArray(".abhay").forEach((text) => {
+      gsap.from(text, {
+          // Set the opacity of the text to 0
+          opacity: 0,
+          // Move the text from the left to its final position
+          // (xPercent: 0 means the text is at its final position)
+          xPercent: 0,
+          // Animate over 1 second
+          duration: 1,
+          // Use a power2 ease-in-out curve
+          ease: "power2.inOut",
+          // Trigger the animation when the text is 60% down the screen
+          scrollTrigger: {
+            // The text is the trigger element
+            trigger: text,
+            // Trigger the animation when the text is 60% down the screen
+            start: "top 60%",
+          },
+        });
+        }, "<");
+      }, []); // position parameter
+   
   const [activeCategory, setActiveCategory] = useState("all");
 
   const filteredSkills = skills.filter(
     (skill) => activeCategory === "all" || skill.category === activeCategory
   );
   return (
-    <section id="skills" className="py-24 px-4 relative bg-secondary/30">
+    
+    <section id="skills"   className=" abhay py-24 px-4 relative bg-secondary/30">
       <div className="container mx-auto max-w-5xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
           My <span className="text-primary"> Skills</span>
@@ -82,5 +114,6 @@ export const SkillsSection = () => {
         </div>
       </div>
     </section>
+    
   );
 };

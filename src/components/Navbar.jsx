@@ -1,7 +1,9 @@
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import {AnimatePresence} from  "framer-motion"
+import {AnimatePresence} from  "framer-motion";
+
+import {motion } from "motion/react";
 
 const navItems = [
   { name: "Home", href: "#hero" },
@@ -46,13 +48,17 @@ export const Navbar = () => {
         {/* desktop nav */}
         <div className="hidden md:flex space-x-8">
           {navItems.map((item, key) => (
-            <a
+            <motion.a 
+            initial = {{opacity: 0}}
+            animate= {{opacity: 1}}
+            transition={{duration: 3}}
+            whileHover={{scale:1.1}}
               key={key}
               href={item.href}
               className="text-foreground/80 hover:text-primary transition-colors duration-300"
             >
               {item.name}
-            </a>
+            </motion.a>
           ))}
         </div>
 
